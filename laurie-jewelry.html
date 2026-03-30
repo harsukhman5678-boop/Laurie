@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laurie – Fine Jewelry</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bronze: #b5651d;
+  --bronze-light: #f5c99a;
+  --dark-navy: #0f1626;
+  --navy: #162032;
+  --light-bg: #f5f4f2;
+  --white: #ffffff;
+  --muted: #8a9bb0;
+  --text-dark: #162032;
+  --text-light: #d0d8e4;
+  --border: #e5e3df;
+  --input-bg: #faf9f8;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Jost',sans-serif; background:var(--white); color:var(--text-dark); overflow-x:hidden; }
+
+/* ── PAGE SYSTEM ── */
+.page { display:none; min-height:100vh; flex-direction:column; }
+.page.active { display:flex; }
+
+/* ── NAVBAR ── */
+nav {
+  position:sticky; top:0; z-index:200;
+  background:var(--light-bg);
+  display:flex; align-items:center; justify-content:space-between;
+  padding:18px 24px;
+  border-bottom:1px solid var(--border);
+}
+.logo {
+  font-family:'Cormorant Garamond',serif;
+  font-size:28px; color:var(--bronze);
+  font-weight:400; font-style:italic;
+  letter-spacing:1px; cursor:pointer;
+}
+.nav-icons { display:flex; gap:22px; align-items:center; position:relative; }
+.nav-icons svg {
+  width:24px; height:24px;
+  stroke:var(--text-dark); fill:none; stroke-width:1.8;
+  cursor:pointer; transition:stroke 0.2s;
+}
+.nav-icons svg:hover { stroke:var(--bronze); }
+.cart-badge {
+  position:absolute; top:-6px; right:36px;
+  background:var(--bronze); color:white;
+  font-size:10px; font-weight:600;
+  width:18px; height:18px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+}
+
+/* ── HERO ── */
+.hero {
+  position:relative;
+  background-image:url('https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=1200&q=85');
+  background-size:cover; background-position:center 40%;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  text-align:center; padding:140px 32px 120px;
+  min-height:115vh;
+}
+.hero::before {
+  content:''; position:absolute; inset:0;
+  background:rgba(255,255,255,0.22);
+}
+.hero > * { position:relative; z-index:1; }
+.hero-eyebrow {
+  font-size:10px; font-weight:500; letter-spacing:6px;
+  text-transform:uppercase; color:#f5c99a;
+  margin-bottom:30px; animation:fadeUp 0.7s ease both;
+}
+.hero h1 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(100px,28vw,168px);
+  font-weight:300; font-style:italic;
+  color:#fff; text-shadow:0 4px 32px rgba(0,0,0,0.18);
+  line-height:0.88; margin-bottom:32px;
+  letter-spacing:-2px; animation:fadeUp 0.8s 0.1s ease both;
+}
+.hero-divider {
+  width:56px; height:1px; background:rgba(255,255,255,0.7);
+  margin:0 auto 32px; animation:fadeUp 0.8s 0.2s ease both;
+}
+.hero p {
+  font-family:'Cormorant Garamond',serif;
+  font-size:24px; font-weight:300; font-style:italic;
+  color:rgba(255,255,255,0.88); letter-spacing:0.5px;
+  margin-bottom:64px; animation:fadeUp 0.8s 0.25s ease both;
+}
+.btn-explore {
+  display:inline-flex; align-items:center; gap:12px;
+  background:var(--bronze); color:var(--white);
+  font-size:12px; font-weight:600; letter-spacing:2.5px;
+  text-transform:uppercase; padding:20px 44px;
+  border-radius:50px; border:none; cursor:pointer;
+  text-decoration:none;
+  box-shadow:0 8px 28px rgba(181,101,29,0.35);
+  animation:fadeUp 0.8s 0.35s ease both;
+  transition:background 0.2s, box-shadow 0.2s, transform 0.15s;
+}
+.btn-explore:hover { background:#9e5518; transform:translateY(-2px); }
+.btn-explore svg { width:17px; height:17px; stroke:white; fill:none; stroke-width:2; }
+.hero-scroll {
+  margin-top:80px; display:flex; flex-direction:column;
+  align-items:center; gap:10px; animation:fadeUp 0.8s 0.5s ease both;
+}
+.hero-scroll span { font-size:10px; font-weight:500; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,0.6); }
+.scroll-line { width:1px; height:44px; background:linear-gradient(to bottom,rgba(255,255,255,0.6),transparent); animation:scrollPulse 2s ease-in-out infinite; }
+@keyframes scrollPulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+
+/* ── SECTION HEADER ── */
+.section-header {
+  padding:56px 24px 20px;
+  display:flex; align-items:center; gap:16px;
+}
+.section-title { font-size:10px; font-weight:600; letter-spacing:3.5px; text-transform:uppercase; color:var(--muted); white-space:nowrap; }
+.section-line { flex:1; height:1px; background:var(--border); }
+
+/* ── PRODUCT GRID ── */
+.products { padding:0 16px 56px; display:flex; flex-direction:column; gap:24px; }
+.product-card {
+  background:var(--white); border-radius:18px; overflow:hidden;
+  box-shadow:0 2px 20px rgba(15,22,38,0.07);
+  transition:box-shadow 0.3s, transform 0.25s; cursor:pointer;
+}
+.product-card:hover { box-shadow:0 10px 40px rgba(15,22,38,0.14); transform:translateY(-3px); }
+.product-card img { width:100%; height:460px; object-fit:cover; display:block; transition:transform 0.5s; }
+.product-card:hover img { transform:scale(1.03); }
+.product-info { padding:22px 22px 26px; }
+.product-category { font-size:10px; font-weight:600; letter-spacing:3px; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
+.product-name { font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:400; color:var(--text-dark); margin-bottom:18px; line-height:1.2; }
+.product-bottom { display:flex; align-items:center; justify-content:space-between; }
+.product-price { font-size:24px; font-weight:500; color:var(--bronze); }
+.add-btn {
+  width:50px; height:50px; background:var(--dark-navy);
+  border-radius:50%; border:none; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition:background 0.2s, transform 0.15s;
+}
+.add-btn:hover { background:var(--bronze); transform:scale(1.1); }
+.add-btn svg { width:20px; height:20px; stroke:white; fill:none; stroke-width:2.5; }
+
+/* ── FOOTER ── */
+footer {
+  background:var(--dark-navy); color:var(--text-light);
+  padding:56px 24px 64px; margin-top:auto;
+}
+.footer-brand { font-family:'Cormorant Garamond',serif; font-size:42px; font-weight:300; font-style:italic; color:var(--white); margin-bottom:16px; letter-spacing:1px; }
+.footer-tagline { font-size:15px; font-weight:300; color:var(--muted); line-height:1.7; margin-bottom:36px; max-width:340px; }
+.social-links { display:flex; gap:24px; margin-bottom:52px; flex-wrap:wrap; }
+.social-links a { font-size:10px; font-weight:600; letter-spacing:2.5px; text-transform:uppercase; color:var(--text-light); text-decoration:none; transition:color 0.2s; }
+.social-links a:hover { color:var(--bronze); }
+.footer-section { margin-bottom:36px; }
+.footer-heading { font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--white); margin-bottom:20px; }
+.footer-links { list-style:none; display:flex; flex-direction:column; gap:14px; }
+.footer-links li a { font-size:16px; font-weight:300; color:var(--muted); text-decoration:none; transition:color 0.2s; }
+.footer-links li a:hover { color:var(--white); }
+
+/* ── PAGE BANNER ── */
+.page-banner {
+  background:var(--light-bg);
+  padding:48px 24px 36px;
+  border-bottom:1px solid var(--border);
+}
+.page-banner-eyebrow { font-size:10px; font-weight:500; letter-spacing:5px; text-transform:uppercase; color:var(--bronze); margin-bottom:12px; }
+.page-banner h2 { font-family:'Cormorant Garamond',serif; font-size:48px; font-weight:300; font-style:italic; color:var(--text-dark); }
+
+/* ── FORMS ── */
+.form-page { padding:32px 24px 60px; flex:1; }
+.form-group { margin-bottom:20px; }
+.form-group label { display:block; font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
+.form-group input, .form-group select, .form-group textarea {
+  width:100%; padding:14px 16px;
+  background:var(--input-bg); border:1px solid var(--border);
+  border-radius:10px; font-family:'Jost',sans-serif;
+  font-size:15px; color:var(--text-dark);
+  transition:border-color 0.2s; outline:none;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color:var(--bronze); }
+.form-group textarea { resize:vertical; min-height:100px; }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.btn-primary {
+  width:100%; padding:18px;
+  background:var(--bronze); color:white;
+  border:none; border-radius:50px;
+  font-family:'Jost',sans-serif; font-size:13px;
+  font-weight:600; letter-spacing:2px;
+  text-transform:uppercase; cursor:pointer;
+  box-shadow:0 8px 28px rgba(181,101,29,0.3);
+  transition:background 0.2s, transform 0.15s;
+  margin-top:8px;
+}
+.btn-primary:hover { background:#9e5518; transform:translateY(-1px); }
+.btn-secondary {
+  width:100%; padding:16px;
+  background:transparent; color:var(--text-dark);
+  border:1.5px solid var(--border); border-radius:50px;
+  font-family:'Jost',sans-serif; font-size:13px;
+  font-weight:600; letter-spacing:2px;
+  text-transform:uppercase; cursor:pointer;
+  transition:border-color 0.2s, color 0.2s;
+  margin-top:10px;
+}
+.btn-secondary:hover { border-color:var(--bronze); color:var(--bronze); }
+.form-divider { text-align:center; color:var(--muted); font-size:13px; margin:16px 0; position:relative; }
+.form-divider::before, .form-divider::after { content:''; position:absolute; top:50%; width:40%; height:1px; background:var(--border); }
+.form-divider::before { left:0; }
+.form-divider::after { right:0; }
+.form-link { color:var(--bronze); cursor:pointer; text-decoration:underline; font-size:13px; display:block; text-align:center; margin-top:16px; }
+
+/* ── CART ── */
+.cart-items { padding:24px 24px 0; flex:1; }
+.cart-item {
+  display:flex; gap:16px; padding:20px 0;
+  border-bottom:1px solid var(--border);
+}
+.cart-item img { width:90px; height:90px; object-fit:cover; border-radius:12px; flex-shrink:0; }
+.cart-item-info { flex:1; }
+.cart-item-cat { font-size:10px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:4px; }
+.cart-item-name { font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:400; margin-bottom:8px; }
+.cart-item-price { font-size:18px; font-weight:500; color:var(--bronze); }
+.cart-item-remove { font-size:11px; color:var(--muted); cursor:pointer; margin-top:6px; letter-spacing:1px; text-transform:uppercase; }
+.cart-item-remove:hover { color:#c0392b; }
+.cart-qty { display:flex; align-items:center; gap:12px; margin-top:8px; }
+.cart-qty button { width:28px; height:28px; border-radius:50%; border:1px solid var(--border); background:white; cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center; transition:border-color 0.2s; }
+.cart-qty button:hover { border-color:var(--bronze); color:var(--bronze); }
+.cart-qty span { font-size:15px; font-weight:500; min-width:20px; text-align:center; }
+.cart-summary {
+  padding:24px;
+  background:var(--light-bg);
+  margin:0 16px 16px;
+  border-radius:16px;
+}
+.cart-summary-row { display:flex; justify-content:space-between; margin-bottom:12px; font-size:14px; color:var(--muted); }
+.cart-summary-row.total { font-size:18px; font-weight:600; color:var(--text-dark); border-top:1px solid var(--border); padding-top:12px; margin-top:4px; }
+.cart-actions { padding:0 24px 48px; display:flex; flex-direction:column; gap:12px; }
+.empty-cart { padding:80px 24px; text-align:center; flex:1; }
+.empty-cart svg { width:64px; height:64px; stroke:var(--border); fill:none; stroke-width:1.2; margin-bottom:20px; }
+.empty-cart h3 { font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:300; color:var(--muted); margin-bottom:8px; }
+.empty-cart p { font-size:14px; color:var(--muted); }
+
+/* ── PRODUCT DETAIL ── */
+.product-detail-img { width:100%; height:480px; object-fit:cover; }
+.product-detail-body { padding:28px 24px 48px; }
+.product-detail-cat { font-size:10px; font-weight:600; letter-spacing:3px; text-transform:uppercase; color:var(--muted); margin-bottom:10px; }
+.product-detail-name { font-family:'Cormorant Garamond',serif; font-size:38px; font-weight:300; line-height:1.1; margin-bottom:16px; }
+.product-detail-price { font-size:30px; font-weight:500; color:var(--bronze); margin-bottom:24px; }
+.product-detail-desc { font-size:15px; font-weight:300; line-height:1.8; color:#4a5568; margin-bottom:28px; }
+.product-detail-specs { margin-bottom:32px; }
+.spec-row { display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid var(--border); font-size:14px; }
+.spec-label { color:var(--muted); font-weight:500; letter-spacing:1px; text-transform:uppercase; font-size:11px; }
+.spec-value { font-weight:400; }
+.back-btn { display:flex; align-items:center; gap:8px; color:var(--muted); font-size:13px; font-weight:500; letter-spacing:1px; text-transform:uppercase; cursor:pointer; padding:24px 24px 0; transition:color 0.2s; }
+.back-btn:hover { color:var(--bronze); }
+.back-btn svg { width:16px; height:16px; stroke:currentColor; fill:none; stroke-width:2; }
+
+/* ── ACCOUNT ── */
+.account-page { padding:24px; flex:1; }
+.account-avatar { width:80px; height:80px; border-radius:50%; background:var(--light-bg); border:2px solid var(--border); display:flex; align-items:center; justify-content:center; margin:0 auto 16px; }
+.account-avatar svg { width:40px; height:40px; stroke:var(--muted); fill:none; stroke-width:1.5; }
+.account-name { font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:300; text-align:center; margin-bottom:4px; }
+.account-email { font-size:13px; color:var(--muted); text-align:center; margin-bottom:32px; }
+.account-menu { display:flex; flex-direction:column; gap:2px; }
+.account-menu-item {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:18px 20px; background:var(--light-bg);
+  border-radius:12px; cursor:pointer;
+  transition:background 0.2s;
+}
+.account-menu-item:hover { background:#eceae6; }
+.account-menu-item-left { display:flex; align-items:center; gap:14px; }
+.account-menu-item-left svg { width:20px; height:20px; stroke:var(--bronze); fill:none; stroke-width:1.8; }
+.account-menu-item span { font-size:15px; font-weight:400; }
+.account-menu-item .chevron { width:16px; height:16px; stroke:var(--muted); fill:none; stroke-width:2; }
+.account-tabs { display:flex; gap:2px; background:var(--light-bg); padding:4px; border-radius:12px; margin-bottom:28px; }
+.account-tab { flex:1; padding:11px; text-align:center; border-radius:9px; cursor:pointer; font-size:13px; font-weight:500; letter-spacing:0.5px; transition:background 0.2s, color 0.2s; color:var(--muted); }
+.account-tab.active { background:var(--white); color:var(--text-dark); box-shadow:0 1px 4px rgba(0,0,0,0.08); }
+
+/* ── ORDER TRACKING ── */
+.order-card { background:var(--light-bg); border-radius:16px; padding:20px; margin-bottom:16px; }
+.order-card-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px; }
+.order-id { font-size:12px; font-weight:600; color:var(--muted); letter-spacing:1px; }
+.order-status { font-size:11px; font-weight:600; letter-spacing:1px; text-transform:uppercase; padding:4px 10px; border-radius:20px; }
+.status-delivered { background:#d4edda; color:#155724; }
+.status-shipping { background:#fff3cd; color:#856404; }
+.status-processing { background:#cce5ff; color:#004085; }
+.order-name { font-family:'Cormorant Garamond',serif; font-size:20px; margin-bottom:4px; }
+.order-price { font-size:16px; font-weight:500; color:var(--bronze); }
+.order-date { font-size:12px; color:var(--muted); margin-top:8px; }
+
+/* ── CONTACT ── */
+.contact-info { padding:24px 24px 0; }
+.contact-card { display:flex; align-items:flex-start; gap:16px; padding:20px; background:var(--light-bg); border-radius:14px; margin-bottom:14px; }
+.contact-card svg { width:22px; height:22px; stroke:var(--bronze); fill:none; stroke-width:1.8; flex-shrink:0; margin-top:2px; }
+.contact-card h4 { font-size:12px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:4px; }
+.contact-card p { font-size:15px; font-weight:300; line-height:1.5; }
+
+/* ── COLLECTIONS PAGE ── */
+.collections-grid { padding:0 16px 56px; display:flex; flex-direction:column; gap:16px; }
+.collection-card {
+  position:relative; border-radius:18px; overflow:hidden;
+  height:200px; cursor:pointer;
+}
+.collection-card img { width:100%; height:100%; object-fit:cover; transition:transform 0.4s; }
+.collection-card:hover img { transform:scale(1.05); }
+.collection-card-overlay { position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,0.6), transparent); display:flex; flex-direction:column; justify-content:flex-end; padding:24px; }
+.collection-card-name { font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:300; font-style:italic; color:white; }
+.collection-card-count { font-size:11px; font-weight:500; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.7); margin-top:4px; }
+
+/* ── ORDER SUCCESS ── */
+.success-page { padding:80px 32px; text-align:center; flex:1; }
+.success-icon { width:80px; height:80px; background:#d4edda; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 24px; }
+.success-icon svg { width:40px; height:40px; stroke:#155724; fill:none; stroke-width:2; }
+.success-page h2 { font-family:'Cormorant Garamond',serif; font-size:40px; font-weight:300; margin-bottom:12px; }
+.success-page p { font-size:15px; color:var(--muted); line-height:1.7; margin-bottom:8px; }
+.success-order-id { font-size:12px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--bronze); margin-bottom:40px; display:block; }
+
+/* ── TOAST ── */
+.toast {
+  position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(100px);
+  background:var(--dark-navy); color:white;
+  padding:14px 28px; border-radius:50px;
+  font-size:13px; font-weight:500; letter-spacing:0.5px;
+  z-index:999; transition:transform 0.3s ease;
+  white-space:nowrap; box-shadow:0 8px 28px rgba(0,0,0,0.2);
+}
+.toast.show { transform:translateX(-50%) translateY(0); }
+
+/* ── MISC ── */
+.page-content { flex:1; }
+.input-card { background:var(--light-bg); border-radius:16px; padding:20px; margin-bottom:16px; }
+.input-card-title { font-size:12px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:16px; }
+.stars { color:var(--bronze); font-size:20px; margin-bottom:8px; }
+.tag { display:inline-block; padding:4px 12px; background:var(--light-bg); border-radius:20px; font-size:11px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--muted); margin-right:6px; margin-bottom:6px; cursor:pointer; border:1px solid var(--border); transition:all 0.2s; }
+.tag:hover, .tag.active { background:var(--bronze); color:white; border-color:var(--bronze); }
+.jewelry-care-tip { padding:16px; background:var(--light-bg); border-radius:12px; margin-bottom:12px; border-left:3px solid var(--bronze); }
+.jewelry-care-tip h4 { font-size:13px; font-weight:600; margin-bottom:6px; }
+.jewelry-care-tip p { font-size:14px; font-weight:300; color:#4a5568; line-height:1.6; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     PAGE: HOME
+══════════════════════════════════════ -->
+<div id="page-home" class="page active" style="flex-direction:column">
+
+  <nav>
+    <div class="logo" onclick="goTo('home')">Laurie</div>
+    <div class="nav-icons">
+      <div class="cart-badge" id="cart-badge">0</div>
+      <svg onclick="goTo('account')" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      <svg onclick="goTo('cart')" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <svg onclick="goTo('collections')" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-eyebrow">Fine Jewelry · Est. 2010</div>
+    <h1>Laurie</h1>
+    <div class="hero-divider"></div>
+    <p>Timeless Elegance, Crafted to Perfection</p>
+    <a class="btn-explore" onclick="goTo('collections')">
+      Explore Collections
+      <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <div class="section-header">
+    <div class="section-title">Featured Pieces</div>
+    <div class="section-line"></div>
+  </div>
+  <div class="products" style="padding:0 16px 24px">
+    <div class="product-card" onclick="openProduct(0)">
+      <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=700&q=80" alt="Ring"/>
+      <div class="product-info">
+        <div class="product-category">Rings</div>
+        <div class="product-name">Eternal Diamond Ring</div>
+        <div class="product-bottom">
+          <span class="product-price">$2,499</span>
+          <button class="add-btn" onclick="event.stopPropagation();addToCart(0)"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        </div>
+      </div>
+    </div>
+    <div class="product-card" onclick="openProduct(1)">
+      <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=700&q=80" alt="Earrings"/>
+      <div class="product-info">
+        <div class="product-category">Earrings</div>
+        <div class="product-name">Diamond Stud Earrings</div>
+        <div class="product-bottom">
+          <span class="product-price">$1,299</span>
+          <button class="add-btn" onclick="event.stopPropagation();addToCart(1)"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        </div>
+      </div>
+    </div>
+    <div class="product-card" onclick="openProduct(2)">
+      <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=700&q=80" alt="Necklace"/>
+      <div class="product-info">
+        <div class="product-category">Necklaces</div>
+        <div class="product-name">Gold Diamond Pendant</div>
+        <div class="product-bottom">
+          <span class="product-price">$1,899</span>
+          <button class="add-btn" onclick="event.stopPropagation();addToCart(2)"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        </div>
+      </div>
+    </div>
+    <div class="product-card" onclick="openProduct(3)">
+      <img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=700&q=80" alt="Bracelet"/>
+      <div class="product-info">
+        <div class="product-category">Bracelets</div>
+        <div class="product-name">Sapphire Tennis Bracelet</div>
+        <div class="product-bottom">
+          <span class="product-price">$3,199</span>
+          <button class="add-btn" onclick="event.stopPropagation();addToCart(3)"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        </div>
+      </div>
+    </div>
+    <div class="product-card" onclick="openProduct(4)">
+      <img src="https://images.unsplash.com/photo-1589674781759-c21c37956a44?w=700&q=80" alt="Ring 2"/>
+      <div class="product-info">
+        <div class="product-category">Rings</div>
+        <div class="product-name">Rose Gold Solitaire</div>
+        <div class="product-bottom">
+          <span class="product-price">$3,799</span>
+          <button class="add-btn" onclick="event.stopPropagation();addToCart(4)"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        </div>
+      </div>
+    </div>
+    <div class="product-card" onclick="openProduct(5)">
+      <img src="https://images.unsplash.com/photo-1573408301185-9519f94b6252?w=700&q=80" alt="Necklace 2"/>
+      <div class="product-info">
+        <div class="product-category">Necklaces</div>
+        <div class="product-name">Pearl Strand Necklace</div>
+        <div class="product-bottom">
+          <span class="product-price">$899</span>
+          <button class="add-btn" onclick="event.stopPropagation();addToCart(5)"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-brand">Laurie</div>
+    <p class="footer-tagline">Crafting fine jewelry that captures life's most precious moments with ethical diamonds and timeless design.</p>
+    <div class="social-links">
+      <a href="#">Instagram</a>
+      <a href="#">Pinterest</a>
+      <a href="#">Facebook</a>
+    </div>
+    <div class="footer-section">
+      <div class="footer-heading">Collections</div>
+      <ul class="footer-links">
+        <li><a onclick="goTo('collections')">Engagement</a></li>
+        <li><a onclick="goTo('collections')">Wedding</a></li>
+        <li><a onclick="goTo('collections')">Gift Guides</a></li>
+      </ul>
+    </div>
+    <div class="footer-section">
+      <div class="footer-heading">Support</div>
+      <ul class="footer-links">
+        <li><a onclick="goTo('contact')">Contact Us</a></li>
+        <li><a onclick="goTo('jewelry-care')">Jewelry Care</a></li>
+        <li><a onclick="goTo('sizing')">Sizing Guide</a></li>
+      </ul>
+    </div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE: PRODUCT DETAIL
+══════════════════════════════════════ -->
+<div id="page-product" class="page" style="flex-direction:column">
+  <nav>
+    <div class="logo" onclick="goTo('home')">Laurie</div>
+    <div class="nav-icons">
+      <div class="cart-badge" id="cart-badge2">0</div>
+      <svg onclick="goTo('account')" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      <svg onclick="goTo('cart')" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <svg onclick="goTo('collections')" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </div>
+  </nav>
+  <div class="back-btn" onclick="history.back(); goTo('home')">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    Back
+  </div>
+  <img id="pd-img" class="product-detail-img" src="" alt=""/>
+  <div class="product-detail-body">
+    <div class="product-detail-cat" id="pd-cat"></div>
+    <div class="product-detail-name" id="pd-name"></div>
+    <div class="product-detail-price" id="pd-price"></div>
+    <div class="stars">★★★★★</div>
+    <div class="product-detail-desc" id="pd-desc"></div>
+    <div class="product-detail-specs" id="pd-specs"></div>
+    <div style="margin-bottom:12px">
+      <div style="font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px">Ring Size</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap" id="pd-sizes"></div>
+    </div>
+    <button class="btn-primary" id="pd-add-btn" style="margin-top:20px">Add to Cart</button>
+    <button class="btn-secondary" onclick="goTo('contact')">Ask About This Piece</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE: COLLECTIONS
+══════════════════════════════════════ -->
+<div id="page-collections" class="page" style="flex-direction:column">
+  <nav>
+    <div class="logo" onclick="goTo('home')">Laurie</div>
+    <div class="nav-icons">
+      <div class="cart-badge" id="cart-badge3">0</div>
+      <svg onclick="goTo('account')" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      <svg onclick="goTo('cart')" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <svg onclick="goTo('home')" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </div>
+  </nav>
+  <div class="page-banner">
+    <div class="page-banner-eyebrow">Explore</div>
+    <h2>Collections</h2>
+  </div>
+  <div style="padding:16px 16px 0">
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <span class="tag active">All</span>
+      <span class="tag">Rings</span>
+      <span class="tag">Necklaces</span>
+      <span class="tag">Earrings</span>
+      <span class="tag">Bracelets</span>
+    </div>
+  </div>
+  <div class="section-header"><div class="section-title">Browse All</div><div class="section-line"></div></div>
+  <div class="products" style="padding:0 16px 56px">
+    <div class="product-card" onclick="openProduct(0)"><img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=700&q=80" alt="Ring"/><div class="product-info"><div class="product-category">Rings</div><div class="product-name">Eternal Diamond Ring</div><div class="product-bottom"><span class="product-price">$2,499</span><button class="add-btn" onclick="event.stopPropagation();addToCart(0)"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div></div></div>
+    <div class="product-card" onclick="openProduct(1)"><img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=700&q=80" alt="Earrings"/><div class="product-info"><div class="product-category">Earrings</div><div class="product-name">Diamond Stud Earrings</div><div class="product-bottom"><span class="product-price">$1,299</span><button class="add-btn" onclick="event.stopPropagation();addToCart(1)"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div></div></div>
+    <div class="product-card" onclick="openProduct(2)"><img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=700&q=80" alt="Necklace"/><div class="product-info"><div class="product-category">Necklaces</div><div class="product-name">Gold Diamond Pendant</div><div class="product-bottom"><span class="product-price">$1,899</span><button class="add-btn" onclick="event.stopPropagation();addToCart(2)"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div></div></div>
+    <div class="product-card" onclick="openProduct(3)"><img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=700&q=80" alt="Bracelet"/><div class="product-info"><div class="product-category">Bracelets</div><div class="product-name">Sapphire Tennis Bracelet</div><div class="product-bottom"><span class="product-price">$3,199</span><button class="add-btn" onclick="event.stopPropagation();addToCart(3)"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div></div></div>
+    <div class="product-card" onclick="openProduct(4)"><img src="https://images.unsplash.com/photo-1589674781759-c21c37956a44?w=700&q=80" alt="Rose Ring"/><div class="product-info"><div class="product-category">Rings</div><div class="product-name">Rose Gold Solitaire</div><div class="product-bottom"><span class="product-price">$3,799</span><button class="add-btn" onclick="event.stopPropagation();addToCart(4)"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div></div></div>
+    <div class="product-card" onclick="openProduct(5)"><img src="https://images.unsplash.com/photo-1573408301185-9519f94b6252?w=700&q=80" alt="Pearl"/><div class="product-info"><div class="product-category">Necklaces</div><div class="product-name">Pearl Strand Necklace</div><div class="product-bottom"><span class="product-price">$899</span><button class="add-btn" onclick="event.stopPropagation();addToCart(5)"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div></div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE: CART
+══════════════════════════════════════ -->
+<div id="page-cart" class="page" style="flex-direction:column">
+  <nav>
+    <div class="logo" onclick="goTo('home')">Laurie</div>
+    <div class="nav-icons">
+      <svg onclick="goTo('account')" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      <svg onclick="goTo('home')" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </div>
+  </nav>
+  <div class="page-banner"><div class="page-banner-eyebrow">Your</div><h2>Shopping Cart</h2></div>
+  <div id="cart-content"></div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE: CHECKOUT / ORDER INFO
+══════════════════════════════════════ -->
+<div id="page-checkout" class="page" style="flex-direction:column">
+  <nav>
+    <div class="logo" onclick="goTo('home')">Laurie</div>
+    <div class="nav-icons">
+      <svg onclick="goTo('cart')" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+    </div>
+  </nav>
+  <div class="page-banner"><div class="page-banner-eyebrow">Almost There</div><h2>Place Your Order</h2></div>
+
+  <div class="form-page">
+    <!-- Order Summary -->
+    <div class="input-card">
+      <div class="input-card-title">Order Summary</div>
+      <div id="checkout-summary"></div>
+    </div>
+
+    <!-- Delivery Info -->
+    <div class="input-card">
+      <div class="input-card-title">Delivery Information</div>
+      <div class="form-group"><label>Full Name</label><input type="text" id="co-name" placeholder="Jane Smith"/></div>
+      <div class="form-group"><label>Email Address</label><input type="email" id="co-email" placeholder="jane@example.com"/></div>
+      <div class="form-group"><label>Phone Number</label><input type="tel" id="co-phone" placeholder="+1 (555) 000-0000"/></div>
+      <div class="form-group"><label>Street Address</label><input type="text" id="co-address" placeholder="123 Main Street, Apt 4B"/></div>
+      <div class="form-row">
+        <div class="form-group"><label>City</label><input type="text" id="co-city" placeholder="New York"/></div>
+        <div class="form-group"><label>ZIP Code</label><input type="text" id="co-zip" placeholder="10001"/></div>
+      </div>
+      <div class="form-group"><label>Country</label>
+        <select id="co-country">
+          <option>United States</option><option>United Kingdom</option><option>Canada</option><option>Australia</option><option>France</option><option>Germany</option><option>India</option><option>UAE</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Payment -->
+    <div class="input-card">
+      <div class="input-card-title">Payment Details</div>
+      <div class="form-group"><label>Card Number</label><input type="text" id="co-card" placeholder="4242 4242 4242 4242" maxlength="19"/></div>
+      <div class="form-row">
+        <div class="form-group"><label>Expiry Date</label><input type="text" id="co-expiry" placeholder="MM / YY" maxlength="7"/></div>
+        <div class="form-group"><label>CVV</label><input type="text" id="co-cvv" placeholder="123" maxlength="4"/></div>
+      </div>
+      <div class="form-group"><label>Name on Card</label><input type="text" id="co-cardname" placeholder="Jane Smith"/></div>
+    </div>
+
+    <!-- Gift Note -->
+    <div class="input-card">
+      <div class="input-card-title">Gift Note (Optional)</div>
+      <div class="form-group"><textarea id="co-gift" placeholder="Add a personal message for the recipient..."></textarea></div>
+    </div>
+
+    <div id="checkout-total" style="font-size:20px;font-weight:600;text-align:center;color:var(--bronze);margin:8px 0 20px"></div>
+    <button class="btn-primary" onclick="placeOrder()">Confirm & Place Order</button>
+    <button class="btn-secondary" onclick="goTo('cart')">Back to Cart</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE: ORDER SUCCESS
+══════════════════════════════════════ -->
+<div id="page-success" class="page" style="flex-direction:column">
+  <nav><div class="logo" onclick="goTo('home')">Laurie</div></nav>
+  <div class="success-page">
+    <div class="success-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+    <h2>Order Placed!</h2>
+    <p>Thank you for your purchase. Your jewelry will be carefully packaged and dispatched within 2–3 business days.</p>
+    <span class="success-order-id" id="success-order-id">#LR-000000</span>
+    <p style="font-size:13px;color:var(--muted)">A confirmation has been sent to your email.</p>
+    <div style="margin-top:40px;display:flex;flex-direction:column;gap:12px;padding:0 8px">
+      <button class="btn-primary" onclick="goTo('account');showTab('orders')">Track My Order</button>
+      <button class="btn-secondary" onclick="goTo('home')">Continue Shopping</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE: ACCOUNT
+══════════════════════════════════════ -->
+<div id="page-account" class="page" style="flex-direction:column">
+  <nav>
+    <div class="logo" onclick="goTo('home')">Laurie</div>
+    <div class="nav-icons">
+      <div class="cart-badge" id="cart-badge4">0</div>
+      <svg onclick="goTo('cart')" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+    </div>
+  </nav>
+  <div id="account-logged-out">
+    <div class="page-banner"><div class="page-banner-eyebrow">Welcome Back</div><h2>My Account</h2></div>
+    <div class="form-page">
+      <div id="login-form">
+        <div class="form-group"><label>Email Address</label><input type="email" id="login-email" placeholder="jane@example.com"/></div>
+        <div class="form-group"><label>Password</label><input type="password" id="login-pass" placeholder="••••••••"/></div>
+        <button class="btn-primary" onclick="doLogin()">Sign In</button>
+        <div class="form-divider">or</div>
+        <button class="btn-secondary" onclick="showRegister()">Create Account</button>
+        <span class="form-link">Forgot Password?</span>
+      </div>
+      <div id="register-form" style="display:none">
+        <div class="form-group"><label>Full Name</label><input type="text" id="reg-name" placeholder="Jane Smith"/></div>
+        <div class="form-group"><label>Email Address</label><input type="email" id="reg-email" placeholder="jane@example.com"/></div>
+        <div class="form-group"><label>Password</label><input type="password" id="reg-pass" placeholder="••••••••"/></div>
+        <div class="form-group"><label>Confirm Password</label><input type="password" placeholder="••••••••"/></div>
+        <button class="btn-primary" onclick="doRegister()">Create Account</button>
+        <button class="btn-secondary" onclick="showLogin()">Already have an account?</button>
+      </div>
+    </div>
+  </div>
+  <div id="account-logged-in" style="display:none">
+    <div style="padding:32px 24px 16px;text-align:center">
+      <div class="account-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
+      <div class="account-name" id="user-display-name">Jane Smith</div>
+      <div class="account-email" id="user-display-email">jane@example.com</div>
+    </div>
+    <div style="padding:0 24px">
+      <div class="account-tabs">
+        <div class="account-tab active" onclick="showTab('profile')">Profile</div>
+        <div class="account-tab" onclick="showTab('orders')">Orders</div>
+        <div class="account-tab" onclick="showTab('wishlist')">Wishlist</div>
+      </div>
+    </div>
+
+    <!-- Profile Tab -->
+    <div id="tab-profile" style="padding:0 24px 48px">
+      <div class="input-card">
+        <div class="input-card-title">Personal Information</div>
+        <div class="form-group"><label>Full Name</label><input type="text" id="profile-name" placeholder="Jane Smith"/></div>
+        <div class="form-group"><label>Email</label><input type="email" id="profile-email" placeholder="jane@example.com"/></div>
+        <div class="form-group"><label>Phone</label><input type="tel" placeholder="+1 (555) 000-0000"/></div>
+        <div class="form-group"><label>Birthday</label><input type="date"/></div>
+        <button class="btn-primary" onclick="showToast('Profile updated!')">Save Changes</button>
+      </div>
+      <div class="input-card">
+        <div class="input-card-title">Saved Address</div>
+        <div class="form-group"><label>Street</label><input type="text" placeholder="123 Main Street"/></div>
+        <div class="form-row">
+          <div class="form-group"><label>City</label><input type="text" placeholder="New York"/></div>
+          <div class="form-group"><label>ZIP</label><input type="text" placeholder="10001"/></div>
+        </div>
+        <button class="btn-primary" onclick="showToast('Address saved!')">Save Address</button>
+      </div>
+      <button class="btn-secondary" onclick="doLogout()">Sign Out</button>
+    </div>
+
+    <!-- Orders Tab -->
+    <div id="tab-orders" style="display:none;padding:0 24px 48px">
+      <div id="orders-list"></div>
+    </div>
+
+    <!-- Wishlist Tab -->
+    <div id="tab-wishlist" style="display:none;padding:0 24px 48px">
+      <div class="product-card" onclick="openProduct(0)" style="margin-bottom:20px"><img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=700&q=80" alt="Ring"/><div class="product-info"><div class="product-category">Rings</div><div class="product-name">Eternal Diamond Ring</div><div class="product-bottom"><span class="product-price">$2,499</span><button class="add-btn" onclick="event.stopPropagation();addToCart(0)"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE: CONTACT
+══════════════════════════════════════ -->
+<div id="page-contact" class="page" style="flex-direction:column">
+  <nav>
+    <div class="logo" onclick="goTo('home')">Laurie</div>
+    <div class="nav-icons">
+      <svg onclick="goTo('account')" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      <svg onclick="goTo('cart')" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+    </div>
+  </nav>
+  <div class="page-banner"><div class="page-banner-eyebrow">Get in Touch</div><h2>Contact Us</h2></div>
+
+  <div class="contact-info">
+    <div class="contact-card">
+      <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 0h3a2 2 0 012 1.72c.13 1 .36 2 .7 2.97a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.11-1.11a2 2 0 012.11-.45c.97.34 1.97.57 2.97.7A2 2 0 0122 14.92v2z"/></svg>
+      <div><h4>Phone</h4><p>+1 (212) 555-0147<br/>Mon–Sat, 9am–6pm EST</p></div>
+    </div>
+    <div class="contact-card">
+      <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      <div><h4>Email</h4><p>hello@lauriejewelry.com<br/>Replies within 24 hours</p></div>
+    </div>
+    <div class="contact-card">
+      <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <div><h4>Atelier</h4><p>48 West 48th Street<br/>New York, NY 10036</p></div>
+    </div>
+  </div>
+
+  <div class="form-page">
+    <div class="input-card">
+      <div class="input-card-title">Send a Message</div>
+      <div class="form-group"><label>Your Name</label><input type="text" placeholder="Jane Smith"/></div>
+      <div class="form-group"><label>Email</label><input type="email" placeholder="jane@example.com"/></div>
+      <div class="form-group"><label>Subject</label>
+        <select>
+          <option>General Inquiry</option>
+          <option>Order Support</option>
+          <option>Custom Design</option>
+          <option>Sizing Help</option>
+          <option>Returns & Exchanges</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Message</label><textarea placeholder="How can we help you today?"></textarea></div>
+      <button class="btn-primary" onclick="showToast('Message sent! We\'ll reply within 24 hours.')">Send Message</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE: JEWELRY CARE
+══════════════════════════════════════ -->
+<div id="page-jewelry-care" class="page" style="flex-direction:column">
+  <nav><div class="logo" onclick="goTo('home')">Laurie</div></nav>
+  <div class="page-banner"><div class="page-banner-eyebrow">Guide</div><h2>Jewelry Care</h2></div>
+  <div style="padding:24px 24px 60px">
+    <p style="font-size:15px;font-weight:300;color:#4a5568;line-height:1.8;margin-bottom:24px">Your Laurie pieces are crafted to last a lifetime. With proper care, they will retain their brilliance for generations.</p>
+    <div class="jewelry-care-tip"><h4>Daily Wear</h4><p>Remove jewelry before exercising, swimming, or applying lotions and perfumes. Chemicals can dull the finish and affect gemstones.</p></div>
+    <div class="jewelry-care-tip"><h4>Cleaning</h4><p>Gently clean with a soft-bristled brush, warm water, and mild dish soap. Pat dry with a lint-free cloth.</p></div>
+    <div class="jewelry-care-tip"><h4>Storage</h4><p>Store each piece separately in the provided pouch or box to prevent scratching. Keep away from direct sunlight and humidity.</p></div>
+    <div class="jewelry-care-tip"><h4>Diamonds</h4><p>Diamonds attract grease. Clean regularly and have them professionally inspected once a year to check prong settings.</p></div>
+    <div class="jewelry-care-tip"><h4>Gold</h4><p>Polish gold with a soft cloth to maintain shine. Avoid contact with chlorine bleach which can weaken gold alloys.</p></div>
+    <div class="jewelry-care-tip"><h4>Professional Service</h4><p>We offer complimentary annual cleaning and inspection for all Laurie pieces. Book an appointment at our atelier.</p></div>
+    <button class="btn-primary" style="margin-top:8px" onclick="goTo('contact')">Book a Service Appointment</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE: SIZING GUIDE
+══════════════════════════════════════ -->
+<div id="page-sizing" class="page" style="flex-direction:column">
+  <nav><div class="logo" onclick="goTo('home')">Laurie</div></nav>
+  <div class="page-banner"><div class="page-banner-eyebrow">Guide</div><h2>Sizing Guide</h2></div>
+  <div style="padding:24px 24px 60px">
+    <p style="font-size:15px;font-weight:300;color:#4a5568;line-height:1.8;margin-bottom:24px">Finding the perfect fit is essential. Use our guide below or contact us for a complimentary sizing consultation.</p>
+    <div class="input-card">
+      <div class="input-card-title">Ring Size Chart (US)</div>
+      <div style="overflow-x:auto">
+        <table style="width:100%;border-collapse:collapse;font-size:13px">
+          <tr style="background:var(--bronze);color:white">
+            <th style="padding:10px;text-align:left;border-radius:8px 0 0 0">US Size</th>
+            <th style="padding:10px;text-align:center">Diameter (mm)</th>
+            <th style="padding:10px;text-align:center;border-radius:0 8px 0 0">Circumference (mm)</th>
+          </tr>
+          <tr style="background:var(--light-bg)"><td style="padding:10px;border-bottom:1px solid var(--border)">5</td><td style="padding:10px;text-align:center;border-bottom:1px solid var(--border)">15.7</td><td style="padding:10px;text-align:center;border-bottom:1px solid var(--border)">49.3</td></tr>
+          <tr><td style="padding:10px;border-bottom:1px solid var(--border)">6</td><td style="padding:10px;text-align:center;border-bottom:1px solid var(--border)">16.5</td><td style="padding:10px;text-align:center;border-bottom:1px solid var(--border)">51.9</td></tr>
+          <tr style="background:var(--light-bg)"><td style="padding:10px;border-bottom:1px solid var(--border)">7</td><td style="padding:10px;text-align:center;border-bottom:1px solid var(--border)">17.3</td><td style="padding:10px;text-align:center;border-bottom:1px solid var(--border)">54.4</td></tr>
+          <tr><td style="padding:10px;border-bottom:1px solid var(--border)">8</td><td style="padding:10px;text-align:center;border-bottom:1px solid var(--border)">18.1</td><td style="padding:10px;text-align:center;border-bottom:1px solid var(--border)">57.0</td></tr>
+          <tr style="background:var(--light-bg)"><td style="padding:10px">9</td><td style="padding:10px;text-align:center">18.9</td><td style="padding:10px;text-align:center">59.5</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="input-card">
+      <div class="input-card-title">How to Measure</div>
+      <p style="font-size:14px;font-weight:300;line-height:1.8;color:#4a5568">Wrap a strip of paper around your finger. Mark where it meets, then measure the length in millimeters. Use the chart above to find your size. Measure at the end of the day when fingers are at their largest.</p>
+    </div>
+    <button class="btn-primary" onclick="goTo('contact')">Get Personalized Help</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── DATA ──
+const products = [
+  { id:0, category:'Rings', name:'Eternal Diamond Ring', price:2499, img:'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=700&q=80', desc:'A breathtaking solitaire diamond set in platinum, featuring a round brilliant-cut center stone of exceptional clarity. Ethically sourced and hand-finished in our New York atelier.', specs:[['Metal','Platinum 950'],['Stone','Round Brilliant Diamond'],['Carat','1.2 ct'],['Clarity','VS1'],['Color','F'],['Setting','4-Prong Solitaire']], sizes:true },
+  { id:1, category:'Earrings', name:'Diamond Stud Earrings', price:1299, img:'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=700&q=80', desc:'Classic diamond studs with a modern sensibility. Each stone is hand-selected for maximum brilliance. Secured with screw-back settings for everyday confidence.', specs:[['Metal','18k White Gold'],['Stone','Round Diamond'],['Total Carat','0.8 ct tw'],['Clarity','VS2'],['Color','G'],['Backing','Screw Back']], sizes:false },
+  { id:2, category:'Necklaces', name:'Gold Diamond Pendant', price:1899, img:'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=700&q=80', desc:'An elegant pendant featuring a geometric diamond set in warm 18k yellow gold. The 16-inch cable chain is adjustable to 18 inches for versatile styling.', specs:[['Metal','18k Yellow Gold'],['Stone','Princess Cut Diamond'],['Carat','0.5 ct'],['Clarity','VS1'],['Color','E'],['Chain Length','16–18 inch']], sizes:false },
+  { id:3, category:'Bracelets', name:'Sapphire Tennis Bracelet', price:3199, img:'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=700&q=80', desc:'A magnificent line of alternating sapphires and diamonds set in 18k white gold. This iconic design has been a symbol of effortless luxury since its creation.', specs:[['Metal','18k White Gold'],['Stones','Blue Sapphire & Diamond'],['Total Carat','4.2 ct tw'],['Length','7 inches'],['Clasp','Box Lock with Safety']], sizes:false },
+  { id:4, category:'Rings', name:'Rose Gold Solitaire', price:3799, img:'https://images.unsplash.com/photo-1589674781759-c21c37956a44?w=700&q=80', desc:'Romantic rose gold frames a stunning oval diamond in this contemporary solitaire. The tapered band and warm metal create an unmistakably feminine silhouette.', specs:[['Metal','18k Rose Gold'],['Stone','Oval Diamond'],['Carat','1.8 ct'],['Clarity','VVS2'],['Color','D'],['Setting','6-Prong Oval']], sizes:true },
+  { id:5, category:'Necklaces', name:'Pearl Strand Necklace', price:899, img:'https://images.unsplash.com/photo-1573408301185-9519f94b6252?w=700&q=80', desc:'A refined strand of hand-matched Akoya pearls knotted between each pearl on silk thread. The gold clasp features a small diamond accent for a polished finish.', specs:[['Pearl Type','Akoya'],['Pearl Size','7–7.5mm'],['Luster','AAA'],['Length','18 inches'],['Clasp','14k Gold with Diamond']], sizes:false },
+];
+
+let cart = [];
+let currentUser = null;
+let orders = [];
+
+// ── NAVIGATION ──
+function goTo(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  window.scrollTo(0,0);
+  updateBadges();
+  if(page==='cart') renderCart();
+  if(page==='checkout') renderCheckout();
+  if(page==='account' && currentUser) renderOrders();
+}
+
+// ── PRODUCT ──
+function openProduct(id) {
+  const p = products[id];
+  document.getElementById('pd-img').src = p.img;
+  document.getElementById('pd-cat').textContent = p.category;
+  document.getElementById('pd-name').textContent = p.name;
+  document.getElementById('pd-price').textContent = '$' + p.price.toLocaleString();
+  document.getElementById('pd-desc').textContent = p.desc;
+  const specs = document.getElementById('pd-specs');
+  specs.innerHTML = p.specs.map(s => `<div class="spec-row"><span class="spec-label">${s[0]}</span><span class="spec-value">${s[1]}</span></div>`).join('');
+  const sizeEl = document.getElementById('pd-sizes');
+  if(p.sizes) {
+    sizeEl.innerHTML = ['5','6','7','8','9','10'].map(s => `<span class="tag" onclick="selectSize(this,'${s}')">${s}</span>`).join('');
+    sizeEl.parentElement.style.display='block';
+  } else {
+    sizeEl.parentElement.style.display='none';
+  }
+  document.getElementById('pd-add-btn').onclick = () => addToCart(id);
+  goTo('product');
+}
+
+function selectSize(el, size) {
+  el.parentElement.querySelectorAll('.tag').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// ── CART ──
+function addToCart(id) {
+  const existing = cart.find(i=>i.id===id);
+  if(existing) existing.qty++;
+  else cart.push({...products[id], qty:1});
+  updateBadges();
+  showToast(products[id].name + ' added to cart');
+}
+
+function updateBadges() {
+  const total = cart.reduce((s,i)=>s+i.qty,0);
+  document.querySelectorAll('[id^=cart-badge]').forEach(b=>{ b.textContent=total; b.style.display=total>0?'flex':'none'; });
+}
+
+function renderCart() {
+  const el = document.getElementById('cart-content');
+  if(!cart.length) {
+    el.innerHTML = `<div class="empty-cart"><svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg><h3>Your cart is empty</h3><p>Add some beautiful pieces to get started</p><div style="margin-top:28px"><button class="btn-primary" style="width:auto;padding:16px 36px" onclick="goTo('collections')">Browse Collections</button></div></div>`;
+    return;
+  }
+  const subtotal = cart.reduce((s,i)=>s+(i.price*i.qty),0);
+  const shipping = subtotal > 500 ? 0 : 25;
+  const total = subtotal + shipping;
+  el.innerHTML = `
+    <div class="cart-items">${cart.map((item,idx)=>`
+      <div class="cart-item">
+        <img src="${item.img}" alt="${item.name}" onclick="openProduct(${item.id})" style="cursor:pointer"/>
+        <div class="cart-item-info">
+          <div class="cart-item-cat">${item.category}</div>
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-price">$${(item.price*item.qty).toLocaleString()}</div>
+          <div class="cart-qty">
+            <button onclick="changeQty(${idx},-1)">−</button>
+            <span>${item.qty}</span>
+            <button onclick="changeQty(${idx},1)">+</button>
+          </div>
+          <div class="cart-item-remove" onclick="removeFromCart(${idx})">Remove</div>
+        </div>
+      </div>`).join('')}
+    </div>
+    <div style="padding:24px 16px 0">
+      <div class="cart-summary">
+        <div class="cart-summary-row"><span>Subtotal</span><span>$${subtotal.toLocaleString()}</span></div>
+        <div class="cart-summary-row"><span>Shipping</span><span>${shipping===0?'Free':'$'+shipping}</span></div>
+        <div class="cart-summary-row total"><span>Total</span><span>$${total.toLocaleString()}</span></div>
+      </div>
+    </div>
+    <div class="cart-actions">
+      <button class="btn-primary" onclick="goTo('checkout')">Proceed to Checkout</button>
+      <button class="btn-secondary" onclick="goTo('collections')">Continue Shopping</button>
+    </div>`;
+}
+
+function changeQty(idx, delta) {
+  cart[idx].qty += delta;
+  if(cart[idx].qty <= 0) cart.splice(idx,1);
+  updateBadges();
+  renderCart();
+}
+
+function removeFromCart(idx) {
+  cart.splice(idx,1);
+  updateBadges();
+  renderCart();
+}
+
+// ── CHECKOUT ──
+function renderCheckout() {
+  const subtotal = cart.reduce((s,i)=>s+(i.price*i.qty),0);
+  const total = subtotal + (subtotal>500?0:25);
+  document.getElementById('checkout-summary').innerHTML = cart.map(i=>`
+    <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px">
+      <span>${i.name} × ${i.qty}</span>
+      <span style="color:var(--bronze);font-weight:500">$${(i.price*i.qty).toLocaleString()}</span>
+    </div>`).join('') + `<div style="display:flex;justify-content:space-between;padding:12px 0;font-weight:600">
+      <span>Total</span><span style="color:var(--bronze)">$${total.toLocaleString()}</span></div>`;
+  document.getElementById('checkout-total').textContent = 'Total: $' + total.toLocaleString();
+}
+
+function placeOrder() {
+  const name = document.getElementById('co-name').value;
+  const email = document.getElementById('co-email').value;
+  const card = document.getElementById('co-card').value;
+  if(!name||!email) { showToast('Please fill in your delivery details'); return; }
+  if(!card) { showToast('Please enter your card details'); return; }
+  const orderId = '#LR-' + Math.floor(100000+Math.random()*900000);
+  const total = cart.reduce((s,i)=>s+(i.price*i.qty),0);
+  orders.unshift({ id:orderId, items:cart.map(i=>i.name).join(', '), total, status:'Processing', date: new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) });
+  document.getElementById('success-order-id').textContent = orderId;
+  cart = [];
+  updateBadges();
+  goTo('success');
+}
+
+// ── ACCOUNT ──
+function doLogin() {
+  const email = document.getElementById('login-email').value || 'guest@example.com';
+  const name = email.split('@')[0].replace(/\./g,' ').replace(/\b\w/g,l=>l.toUpperCase());
+  currentUser = { name, email };
+  document.getElementById('user-display-name').textContent = name;
+  document.getElementById('user-display-email').textContent = email;
+  document.getElementById('profile-name').value = name;
+  document.getElementById('profile-email').value = email;
+  document.getElementById('account-logged-out').style.display='none';
+  document.getElementById('account-logged-in').style.display='block';
+  showToast('Welcome back, ' + name.split(' ')[0] + '!');
+}
+
+function doRegister() {
+  const name = document.getElementById('reg-name').value || 'New User';
+  const email = document.getElementById('reg-email').value || 'user@example.com';
+  currentUser = { name, email };
+  document.getElementById('user-display-name').textContent = name;
+  document.getElementById('user-display-email').textContent = email;
+  document.getElementById('profile-name').value = name;
+  document.getElementById('profile-email').value = email;
+  document.getElementById('account-logged-out').style.display='none';
+  document.getElementById('account-logged-in').style.display='block';
+  showToast('Account created! Welcome, ' + name.split(' ')[0] + '!');
+}
+
+function doLogout() {
+  currentUser = null;
+  document.getElementById('account-logged-out').style.display='block';
+  document.getElementById('account-logged-in').style.display='none';
+  showToast('Signed out successfully');
+}
+
+function showRegister() {
+  document.getElementById('login-form').style.display='none';
+  document.getElementById('register-form').style.display='block';
+}
+
+function showLogin() {
+  document.getElementById('register-form').style.display='none';
+  document.getElementById('login-form').style.display='block';
+}
+
+function showTab(tab) {
+  ['profile','orders','wishlist'].forEach(t=>{
+    document.getElementById('tab-'+t).style.display = t===tab ? 'block' : 'none';
+  });
+  document.querySelectorAll('.account-tab').forEach((el,i)=>{
+    el.classList.toggle('active', ['profile','orders','wishlist'][i]===tab);
+  });
+  if(tab==='orders') renderOrders();
+}
+
+function renderOrders() {
+  const el = document.getElementById('orders-list');
+  if(!orders.length) {
+    el.innerHTML='<div style="text-align:center;padding:60px 0;color:var(--muted)"><p style="font-family:Cormorant Garamond,serif;font-size:24px;font-weight:300">No orders yet</p><p style="font-size:14px;margin-top:8px">Your order history will appear here</p><div style="margin-top:24px"><button class="btn-primary" style="width:auto;padding:14px 32px" onclick="goTo(\'collections\')">Start Shopping</button></div></div>';
+    return;
+  }
+  el.innerHTML = orders.map(o=>`
+    <div class="order-card">
+      <div class="order-card-header">
+        <div><div class="order-id">${o.id}</div><div class="order-name">${o.items.length>30?o.items.substring(0,30)+'…':o.items}</div></div>
+        <span class="order-status ${o.status==='Delivered'?'status-delivered':o.status==='Shipped'?'status-shipping':'status-processing'}">${o.status}</span>
+      </div>
+      <div class="order-price">$${o.total.toLocaleString()}</div>
+      <div class="order-date">${o.date}</div>
+    </div>`).join('');
+}
+
+// ── TOAST ──
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2800);
+}
+
+// Init
+updateBadges();
+</script>
+</body>
+</html>
